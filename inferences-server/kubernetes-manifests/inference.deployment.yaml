@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myinference
+spec:
+  selector:
+    matchLabels:
+      app: myinference
+  template:
+    metadata:
+      labels:
+        app: myinference
+    spec:
+      containers:
+      - name: myinference
+        image: dlatqdlatq/tf_service:latest
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "1000m"
+        ports:
+        - containerPort: 5000
