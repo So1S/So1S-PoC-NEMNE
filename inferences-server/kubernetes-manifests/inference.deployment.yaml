@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myinference
+  name: inference-deployment
 spec:
   selector:
     matchLabels:
@@ -12,11 +12,11 @@ spec:
         app: myinference
     spec:
       containers:
-      - name: myinference
+      - name: bentoml-inference
         image: dlatqdlatq/tf_service:latest
         resources:
           limits:
-            memory: "256Mi"
+            memory: "1024Mi"
             cpu: "1000m"
         ports:
         - containerPort: 5000
