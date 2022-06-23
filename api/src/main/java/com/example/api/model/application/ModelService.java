@@ -84,4 +84,23 @@ public class ModelService {
 
 		return deployment.toString();
 	}
+
+	private void buildModel() {
+		/*
+		mount volume(or ConfigMap)을 통해서 api-server에 저장된 모델을 연결하고
+			model.pt 가지고 있다. -> 일단은 api 서버에 저장
+
+		Job(도커 이미지를 만들어야 됨)에서는 컨테이너를 생성하고 연결을 해준다.
+			-> docker + bentoML 환경이 있는 Job 컨테이너에서 bentoml bundle 생성 후 도커라이즈하고 레지스트리에 푸쉬까지 해준다.
+
+
+		1차 -> bentoML(bentoml bundle까지 생성 + serve)
+		2차 -> Docker가 있는 컨테이너를 통해 이미지 푸쉬
+
+		Job만 만들되, Model에 대한 볼륨 설정 및 docker login을 위한 Secret 설정까지 해줄 것
+
+		*/
+
+
+	}
 }

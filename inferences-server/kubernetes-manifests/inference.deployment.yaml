@@ -20,3 +20,10 @@ spec:
             cpu: "1000m"
         ports:
         - containerPort: 5000
+      #   volumeMounts:
+      #     - mountPath: /var/run/docker.sock
+      #       name: docker-socket-volume
+      # volumes:
+      #   - name: docker-socket-volume
+      #     hostPath:
+      #       path: /var/run/docker.sock
