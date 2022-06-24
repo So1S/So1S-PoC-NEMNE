@@ -15,10 +15,10 @@ spec:
       serviceAccountName: control-inference
       containers:
       - name: spring-api
-        image: dlatqdlatq/poc-api:latest
+        image: dlatqdlatq/poc-api:v1
         resources:
           limits:
-            memory: "256Mi"
-            cpu: "250m"
+            memory: "1024Mi"
+            cpu: "1000m"
         ports:
         - containerPort: 8080
