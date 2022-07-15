@@ -15,7 +15,7 @@ spec:
       serviceAccountName: control-inference
       containers:
       - name: spring-api
-        image: dlatqdlatq/poc-api:v1
+        image: dlatqdlatq/poc-api:v2-test
         resources:
           limits:
             memory: "1024Mi"

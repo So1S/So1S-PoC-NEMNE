@@ -41,6 +41,7 @@ public class ModelService {
 		io.fabric8.kubernetes.api.model.Service service = new ServiceBuilder()
 			.withNewMetadata()
 			.withName("inference-service")
+				.withNamespace("backend")
 			.endMetadata()
 			.withNewSpec()
 			.withSelector(Collections.singletonMap("app", "myinference"))
@@ -52,7 +53,7 @@ public class ModelService {
 
 		//create service
 		client.services()
-			.inNamespace("default")
+			.inNamespace("backend")
 			.createOrReplace(service);
 		logger.info("service spec: {}", service.getSpec());
 
@@ -61,19 +62,26 @@ public class ModelService {
 		reqMap.put("memory", new Quantity("1024Mi"));
 
 		ResourceRequirements resourceRequirements = new ResourceRequirementsBuilder()
-			.withLimits(reqMap).build();
+				.withLimits(reqMap).build();
 
 		Deployment deployment = new DeploymentBuilder()
 			.withNewMetadata()
 			.withName("inference-deployment")
+				.withNamespace("backend")
 			.endMetadata()
 			.withNewSpec()
-			.withReplicas(2)
+			.withReplicas(1)
 			.withNewTemplate()
 			.withNewMetadata()
 			.addToLabels("app", "myinference")
 			.endMetadata()
 			.withNewSpec()
+				.addNewToleration()
+				.withKey("kind")
+				.withOperator("Equal")
+				.withValue("inference")
+				.withEffect("NoSchedule")
+				.endToleration()
 			.addNewContainer()
 			.withName("bentoml-inference")
 			.withImage(imageName)
@@ -91,7 +99,7 @@ public class ModelService {
 			.build();
 
 		//create deployment
-		client.apps().deployments().inNamespace("default").createOrReplace(deployment);
+		client.apps().deployments().inNamespace("backend").createOrReplace(deployment);
 		logger.info("deployment spec: {}", deployment.getSpec());
 
 		return deployment.toString();

@@ -1,0 +1,40 @@
+# ingress.yml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: test
+  namespace: backend
+  annotations:
+    kubernetes.io/ingress.class: 'nginx'
+spec:
+  rules:
+  - http:
+      paths:
+        - path: /api/v1
+          pathType: Prefix
+          backend:
+            service:
+              name: backend-so1s-backend
+              port:
+                number: 8080
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: inference-service
+              port:
+                number: 5000
+#        - path: /foo
+#          pathType: Prefix
+#          backend:
+#            service:
+#              name: svc1
+#              port:
+#                number: 80
+#        - path: /bar
+#          pathType: Prefix
+#          backend:
+#            service:
+#              name: svc2
+#              port:
+#                number: 80
